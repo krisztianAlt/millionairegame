@@ -1,52 +1,41 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.print("\033[2J\033[1;1H");
 
-        printMenu();
+        boolean invalidMenu = false;
+        boolean exitGame = false;
 
-        Scanner select = new Scanner(System.in);
-        int option = 0;
-        System.out.println("Please select an option: ");
-
-        boolean notValidOption = true;
-        while (notValidOption) {
-
-            if (select.hasNextInt()) {
-                option = select.nextInt();
-                notValidOption = false;
-            } else {
-                // System.out.print(String.format("\033[%dA", 1));
-                System.out.print("\033[2J\033[1;1H");
-
-                // System.out.print(String.format("\033[%dA", 6));
-
-                printMenu();
-                System.out.println("Invalid option. Please select menu again.");
-                select.next();
-            }
-
-
-            /*
-            try {
-                int option = select.nextInt();
-                notValidOption = false;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid option. Please select menu again.");
-            }
-            */
+        int menuLength = Screen.printMenu();
+        ArrayList<Integer> validOptions = new ArrayList<Integer>();
+        for (int i = 1; i <= menuLength; i++) {
+            validOptions.add(i);
         }
-        System.out.println(option);
 
-    }
+        while (!exitGame) {
 
-    public static void printMenu() {
-        String[] menu = {"New Game", "High Score", "Credits", "Exit"};
-        for (int i = 0; i < menu.length; i++) {
-            System.out.println(i+1 + " - " + menu[i]);
+            Screen.clear();
+            Screen.printMenu();
+
+            if (invalidMenu) {
+                System.out.println("Not valid MENU.");
+            }
+
+            int option = Screen.selectMenu(validOptions);
+
+            if (option == 1) {
+                System.out.println("New Game");
+            } else if (option == 2) {
+                System.out.println("High Scores");
+            } else if (option == 3) {
+                System.out.println("Credits");
+            } else if (option == 4) {
+                System.out.println("Exiting Game");
+                System.exit(0);
+            } else if (option == -1) {
+                invalidMenu = true;
+            }
         }
     }
 }
