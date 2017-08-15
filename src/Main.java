@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.print("\033[2J");
-        System.out.print(String.format("\033[%dA", 1));
+        System.out.print("\033[2J\033[1;1H");
 
         printMenu();
 
@@ -20,9 +19,11 @@ public class Main {
                 option = select.nextInt();
                 notValidOption = false;
             } else {
-                //System.out.print(String.format("\033[%dA", 1));
-                System.out.print("\033[2J");
-                System.out.print(String.format("\033[%dA", 6));
+                // System.out.print(String.format("\033[%dA", 1));
+                System.out.print("\033[2J\033[1;1H");
+
+                // System.out.print(String.format("\033[%dA", 6));
+
                 printMenu();
                 System.out.println("Invalid option. Please select menu again.");
                 select.next();
