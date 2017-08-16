@@ -1,9 +1,5 @@
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
-import java.util.ArrayList;
 
 public class Main {
 
@@ -29,12 +25,13 @@ public class Main {
 
 
             String[] randomizedAnswers = new String[4];
-            randomizedAnswers[0] = questionWithAnswers[1];
-            randomizedAnswers[1] = questionWithAnswers[2];
-            randomizedAnswers[2] = questionWithAnswers[3];
-            randomizedAnswers[3] = questionWithAnswers[4];
+
+            // NEW STUFF
+            for (int i = 0; i < 4; i++) {
+                randomizedAnswers[i] = questionWithAnswers[i + 1];
+            }
+
             Collections.shuffle(Arrays.asList(randomizedAnswers));
-            // System.out.println("RANDIMOZED ANSWERS: " + Arrays.toString(randomizedAnswers));
 
             Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
 
@@ -46,6 +43,22 @@ public class Main {
                     answerIsNotValid = false;
                 }
             }
+
+            // NEW STUFF
+            int randomIndex = ThreadLocalRandom.current().nextInt(1, 4);
+            int counter = 1;
+            for (int i = 0; i < 4; i++) {
+                if (randomizedAnswers[i] == questionWithAnswers[1]) {
+                    continue;
+                } else if (counter == randomIndex) {
+                    counter++;
+                } else {
+                    randomizedAnswers[i] = "";
+                    counter++;
+                }
+
+            }
+
 
             if (randomizedAnswers[answer-1] == questionWithAnswers[1]){
                 level++;

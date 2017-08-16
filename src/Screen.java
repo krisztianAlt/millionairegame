@@ -56,11 +56,11 @@ public class Screen {
 
         // question and answers:
         System.out.println("Question: " + questionWithAnswers[0]);
-        System.out.println("1. "+ randomizedAnswers[0]);
-        System.out.println("2. "+ randomizedAnswers[1]);
-        System.out.println("3. "+ randomizedAnswers[2]);
-        System.out.println("4. "+ randomizedAnswers[3]);
 
+        // NEW STUFF
+        for(int i = 0; i < 4; i++) {
+            System.out.println(i + ". " + randomizedAnswers[i]);
+        }
         // helpers:
     }
 
