@@ -20,6 +20,7 @@ public class Main {
 
             if (invalidMenu) {
                 System.out.println("Not valid MENU.");
+                invalidMenu = false;
             }
 
             int option = Screen.selectMenu(validOptions);
