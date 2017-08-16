@@ -6,14 +6,16 @@ public class Game {
     private int currentLevel;
     private String playerName;
     private ArrayList maxLineNumbers;
-    private Set<Boolean> usedHelpers = new HashSet<>();
+    private HashMap hasHelpers = new HashMap();
 
 
     public Game() {
         this.currentLevel = 1;
-        for (int index = 0; index < 3; index++){
-            usedHelpers.add(false);
-        }
+
+        hasHelpers.put("half", true);
+        hasHelpers.put("poll", true);
+        hasHelpers.put("expert", true);
+
     }
 
     public int getCurrentLevel(){
@@ -39,5 +41,18 @@ public class Game {
         this.playerName = userName;
 
     }
+
+    public HashMap getHasHelpers(){
+
+        return this.hasHelpers;
+
+    }
+
+    public void setHasHelpers(String key, Boolean value){
+
+        this.hasHelpers.put(key, value);
+
+    }
+
 
 }
