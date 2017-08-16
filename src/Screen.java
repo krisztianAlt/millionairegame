@@ -1,11 +1,8 @@
-import org.w3c.dom.ranges.Range;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.lang.*;
 
-import static javafx.scene.input.KeyCode.T;
+
 
 public class Screen {
 

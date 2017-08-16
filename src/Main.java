@@ -14,12 +14,10 @@ public class Main {
         game.setUserName(userName);
 
         List maxLineNumber = DataManager.getMaxLineNumbers();
-        System.out.println(maxLineNumber);
-        System.out.println(game.getCurrentLevel());
+
         int level;
 
         boolean userInGame = true; // if game ends, we should change userInGame to false
-        //System.out.println("RANDOM NUMBER: " + ThreadLocalRandom.current().nextInt(1, 5 + 1));
         while (userInGame){
 
             level = game.getCurrentLevel();
@@ -66,9 +64,9 @@ public class Main {
 
         }
 
-        }
-
     }
+
+
 
     public static String retrieveUserName() {
 
