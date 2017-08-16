@@ -30,14 +30,12 @@ public class Main {
                 questionWithAnswers = DataManager.readFromFile(game.getCurrentLevel(), randomQuestionNumber);
 
 
+                // NEW STUFF
+                for (int i = 0; i < 4; i++) {
+                    randomizedAnswers[i] = questionWithAnswers[i + 1];
+                }
 
-
-            // NEW STUFF
-            for (int i = 0; i < 4; i++) {
-                randomizedAnswers[i] = questionWithAnswers[i + 1];
-            }
-
-            Collections.shuffle(Arrays.asList(randomizedAnswers));
+                Collections.shuffle(Arrays.asList(randomizedAnswers));
 
                 nextQuestionIsNotNeeded = false;
                 Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
@@ -52,38 +50,38 @@ public class Main {
                 }
             }
 
-            // NEW STUFF
-            int randomIndex = ThreadLocalRandom.current().nextInt(1, 4);
-            int counter = 1;
-            for (int i = 0; i < 4; i++) {
-                if (randomizedAnswers[i] == questionWithAnswers[1]) {
-                    continue;
-                } else if (counter == randomIndex) {
-                    counter++;
-                } else {
-                    randomizedAnswers[i] = "";
-                    counter++;
-                }
-
-            }
 
             switch (answer){
                 case "H":
-                    // code;
-                    System.out.println("HI FROM P");
+                    game.setHasHelpers("half", false);
+
+                    // NEW STUFF
+                    int randomIndex = ThreadLocalRandom.current().nextInt(1, 4);
+                    int counter = 1;
+                    for (int i = 0; i < 4; i++) {
+                        if (randomizedAnswers[i] == questionWithAnswers[1]) {
+                            continue;
+                        } else if (counter == randomIndex) {
+                            counter++;
+                        } else {
+                            randomizedAnswers[i] = "";
+                            counter++;
+                        }
+
+                    }
+                    System.out.println("RANDIMOZED WITH TWO HIDDEN ANSWER: " + Arrays.toString(randomizedAnswers));
+                    Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;
                 case "P":
-                    // code;
-                    System.out.println("HI");
-
+                    game.setHasHelpers("poll", false);
+                    Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;
                 case "E":
-                    // code;
-
+                    game.setHasHelpers("expert", false);
+                    Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;
                 case "T":
-                    // code;
-                    System.out.println("TERMINATED");
+                    Screen.displayMessages("You are coward, but it's not problem, thanks for playing, really.");
                     userInGame = false;
                     break;
                 default:
@@ -136,9 +134,9 @@ public class Main {
             validOptions.add(i);
         }
 
-        Screen.clear();
 
         while (!exitGame) {
+            Screen.clear();
 
             Screen.printMenu();
 

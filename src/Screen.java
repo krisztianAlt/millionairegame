@@ -22,7 +22,6 @@ public class Screen {
     }
 
     public static int selectMenu(ArrayList<Integer> validOptions) {
-
         Scanner select = new Scanner(System.in);
         System.out.println("Please select an option: ");
         int option = 0;
@@ -54,14 +53,14 @@ public class Screen {
         for (int index=currentLevel; index<11;index++){
             remainedLevels = remainedLevels + "(" + index + ")";
         }
-        System.out.println("\n" + userName + ": " + plusSigns + remainedLevels + "\n");
+        System.out.println("\n" + userName + ": " + plusSigns + remainedLevels + "\n\n");
 
         // question and answers:
-        System.out.println("Question: " + questionWithAnswers[0]);
+        System.out.println("Question: " + questionWithAnswers[0] + "\n");
 
         // NEW STUFF
         for(int i = 0; i < 4; i++) {
-            System.out.println(i + ". " + randomizedAnswers[i]);
+            System.out.println((i + 1) + ". " + randomizedAnswers[i]);
         }
         // helpers:
         HashMap<String, Boolean> availableHelpers = new HashMap<>();
@@ -117,7 +116,14 @@ public class Screen {
     }
 
     public static void displayMessages(String message){
+        Scanner justOnePush = new Scanner(System.in);
+
         System.out.println("\n" + message + "\n");
+        System.out.println("Please, press any button to continue.");
+        if (justOnePush.hasNextLine()) {
+            System.out.println("Great.");
+        }
+
     }
 
 }
