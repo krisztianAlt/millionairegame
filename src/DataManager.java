@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class DataManager {
 
-    private static String filePath = "data/";
+    private static String filePath = "../../../data/";
     private static String fileName = "questions_level_";
     private static String fileExtension = ".csv";
 

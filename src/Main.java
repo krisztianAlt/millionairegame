@@ -65,7 +65,7 @@ public class Main {
             int option = Screen.selectMenu(validOptions);
 
             if (option == 1) {
-                System.out.println("New Game");
+                processGame();
             } else if (option == 2) {
                 System.out.println("High Scores");
             } else if (option == 3) {
