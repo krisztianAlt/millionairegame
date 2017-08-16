@@ -15,50 +15,77 @@ public class Main {
 
         List maxLineNumber = DataManager.getMaxLineNumbers();
 
-        int level;
+        int level = -1;
+
+        String[] questionWithAnswers = new String[6];
+        String[] randomizedAnswers = new String[4];
+        boolean nextQuestionIsNotNeeded = true;
 
         boolean userInGame = true; // if game ends, we should change userInGame to false
         while (userInGame){
+            if (nextQuestionIsNotNeeded){
 
-            level = game.getCurrentLevel();
-            int upperLimit = (int) maxLineNumber.get(level-1);
+                level = game.getCurrentLevel();
+                int upperLimit = (int) maxLineNumber.get(level-1);
 
-            int randomQuestionNumber = ThreadLocalRandom.current().nextInt(1, upperLimit + 1);
+                int randomQuestionNumber = ThreadLocalRandom.current().nextInt(1, upperLimit + 1);
 
-            String[] questionWithAnswers = DataManager.readFromFile(game.getCurrentLevel(), randomQuestionNumber);
+                questionWithAnswers = DataManager.readFromFile(game.getCurrentLevel(), randomQuestionNumber);
 
+                randomizedAnswers[0] = questionWithAnswers[1];
+                randomizedAnswers[1] = questionWithAnswers[2];
+                randomizedAnswers[2] = questionWithAnswers[3];
+                randomizedAnswers[3] = questionWithAnswers[4];
+                Collections.shuffle(Arrays.asList(randomizedAnswers));
+                // System.out.println("RANDIMOZED ANSWERS: " + Arrays.toString(randomizedAnswers));
 
-            String[] randomizedAnswers = new String[4];
-            randomizedAnswers[0] = questionWithAnswers[1];
-            randomizedAnswers[1] = questionWithAnswers[2];
-            randomizedAnswers[2] = questionWithAnswers[3];
-            randomizedAnswers[3] = questionWithAnswers[4];
-            Collections.shuffle(Arrays.asList(randomizedAnswers));
-            // System.out.println("RANDIMOZED ANSWERS: " + Arrays.toString(randomizedAnswers));
-
-            Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+                nextQuestionIsNotNeeded = false;
+                Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+            }
 
             boolean answerIsNotValid = true;
-            int answer = -1;
+            String answer = "wrong input";
             while (answerIsNotValid){
                 answer = Screen.getUserChoose();
-                if (answer != -1) {
+                if (answer != "wrong input") {
                     answerIsNotValid = false;
                 }
             }
 
-            if (randomizedAnswers[answer-1] == questionWithAnswers[1]){
-                level++;
-                game.setCurrentLevel(level);
-                if (level == 11){
-                    Screen.displayMessages("You have won the game!");
+            switch (answer){
+                case "H":
+                    // code;
+                    System.out.println("HI FROM P");
+                    break;
+                case "P":
+                    // code;
+                    System.out.println("HI");
+
+                    break;
+                case "E":
+                    // code;
+
+                    break;
+                case "T":
+                    // code;
+                    System.out.println("TERMINATED");
                     userInGame = false;
-                } else {
-                    Screen.displayMessages("Great, you proceed to next level!");
-                }
-            } else {
-                Screen.displayMessages("You have failed. Try again.");
-                userInGame = false;
+                    break;
+                default:
+                    if (randomizedAnswers[Integer.parseInt(answer)-1] == questionWithAnswers[1]){
+                        level++;
+                        game.setCurrentLevel(level);
+                        if (level == 11){
+                            Screen.displayMessages("You have won the game!");
+                            userInGame = false;
+                        } else {
+                            nextQuestionIsNotNeeded = true;
+                            Screen.displayMessages("Great, you proceed to next level!");
+                        }
+                    } else {
+                        Screen.displayMessages("You have failed. Try again.");
+                        userInGame = false;
+                    }
             }
 
         }

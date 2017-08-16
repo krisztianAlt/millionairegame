@@ -6,7 +6,7 @@ public class Game {
     private int currentLevel;
     private String playerName;
     private ArrayList maxLineNumbers;
-    private HashMap hasHelpers = new HashMap();
+    private HashMap<String, Boolean> hasHelpers = new HashMap<>();
 
 
     public Game() {
