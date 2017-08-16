@@ -4,15 +4,19 @@ import java.util.Scanner;
 public class Screen {
 
     public static void clear() {
+
         System.out.print("\033[2J\033[1;1H");
+
     }
 
     public static int printMenu() {
+
         String[] menu = {"New Game", "High Scores", "Credits", "Exit"};
         for (int i = 0; i < menu.length; i++) {
             System.out.println(i+1 + " - " + menu[i]);
         }
         return menu.length;
+
     }
 
     public static int selectMenu(ArrayList<Integer> validOptions) {
@@ -45,5 +49,17 @@ public class Screen {
         int answer = scan.nextInt();
 
         return answer;
+    }
+
+    public static String getUserName() {
+
+        String userName;
+
+        Scanner name = new Scanner(System.in);
+        System.out.println("Please enter your name: ");
+        userName = name.nextLine();
+
+        return userName;
+
     }
 }
