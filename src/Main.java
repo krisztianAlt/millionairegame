@@ -36,7 +36,7 @@ public class Main {
             Collections.shuffle(Arrays.asList(randomizedAnswers));
             // System.out.println("RANDIMOZED ANSWERS: " + Arrays.toString(randomizedAnswers));
 
-            Screen.displayQuestion(questionWithAnswers, randomizedAnswers);
+            Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
 
             boolean answerIsNotValid = true;
             int answer = -1;
@@ -51,14 +51,13 @@ public class Main {
                 level++;
                 game.setCurrentLevel(level);
                 if (level == 11){
-                    System.out.println("You have won the game!");
+                    Screen.displayMessages("You have won the game!");
                     userInGame = false;
                 } else {
-                    Screen.displaySuccessMessage();
-                    // System.out.println("Great, you proceed to next level!");
+                    Screen.displayMessages("Great, you proceed to next level!");
                 }
             } else {
-                System.out.println("You have failed. Try again.");
+                Screen.displayMessages("You have failed. Try again.");
                 userInGame = false;
             }
 

@@ -1,4 +1,6 @@
 
+import com.sun.deploy.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,14 +38,30 @@ public class Screen {
         return -1;
     }
 
-    public static void displayQuestion(String[] questionWithAnswers, String[] randomizedAnswers){
-        Scanner scan = new Scanner(System.in);
+    public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
+        System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
 
+        // progress bar:
+        String userName = game.getUserName();
+        int currentLevel = game.getCurrentLevel();
+        String plusSigns = "";
+        for (int index=1;index<currentLevel;index++) {
+            plusSigns = plusSigns+"+";
+        }
+        String remainedLevels = "";
+        for (int index=currentLevel; index<11;index++){
+            remainedLevels = remainedLevels + "(" + index + ")";
+        }
+        System.out.println(userName + ": " + plusSigns + remainedLevels);
+
+        // question and answers:
         System.out.println("Question: " + questionWithAnswers[0]);
         System.out.println("1. "+ randomizedAnswers[0]);
         System.out.println("2. "+ randomizedAnswers[1]);
         System.out.println("3. "+ randomizedAnswers[2]);
         System.out.println("4. "+ randomizedAnswers[3]);
+
+        // helpers:
     }
 
     public static int getUserChoose() {
@@ -74,8 +92,8 @@ public class Screen {
 
     }
 
-    public static void displaySuccessMessage(){
-        System.out.println("\nGreat, you proceed to next level!\n");
+    public static void displayMessages(String message){
+        System.out.println("\n" + message);
     }
 
 }
