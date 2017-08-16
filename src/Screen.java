@@ -2,6 +2,7 @@
 import com.sun.deploy.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -39,6 +40,7 @@ public class Screen {
     }
 
     public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
+        clear();
         System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
 
         // progress bar:
@@ -52,7 +54,7 @@ public class Screen {
         for (int index=currentLevel; index<11;index++){
             remainedLevels = remainedLevels + "(" + index + ")";
         }
-        System.out.println(userName + ": " + plusSigns + remainedLevels);
+        System.out.println("\n" + userName + ": " + plusSigns + remainedLevels + "\n");
 
         // question and answers:
         System.out.println("Question: " + questionWithAnswers[0]);
@@ -62,22 +64,44 @@ public class Screen {
             System.out.println(i + ". " + randomizedAnswers[i]);
         }
         // helpers:
+        HashMap<String, Boolean> availableHelpers = new HashMap<>();
+        availableHelpers = game.getHasHelpers();
+        String helpers = "";
+
+        if (availableHelpers.get("half") == true){
+            helpers = helpers + "50:50 (H)  ";
+        }
+        if (availableHelpers.get("poll") == true){
+            helpers = helpers + "POLL (P)  ";
+        }
+        if (availableHelpers.get("expert") == true){
+            helpers = helpers + "Expert (E)";
+        }
+        System.out.println("\n"+helpers);
+
+        System.out.println("\nTake the money & run (T)");
+
     }
 
-    public static int getUserChoose() {
+    public static String getUserChoose() {
         Scanner select = new Scanner(System.in);
-        System.out.println("Please select an answer: ");
-        int option = 0;
+        System.out.println("\nPlease select an answer: ");
 
         if (select.hasNextInt()) {
-            option = select.nextInt();
+            Integer option = select.nextInt();
 
             if (option == 1 || option == 2 || option == 3 || option == 4) {
+                return option.toString();
+            }
+        } else if(select.hasNextLine()){
+            String option = select.nextLine().toUpperCase();
+
+            if (option.equals("H") || option.equals("P") || option.equals("E") || option.equals("T")){
                 return option;
             }
         }
 
-        return -1;
+        return "wrong input";
     }
 
     public static String getUserName() {
@@ -93,7 +117,7 @@ public class Screen {
     }
 
     public static void displayMessages(String message){
-        System.out.println("\n" + message);
+        System.out.println("\n" + message + "\n");
     }
 
 }

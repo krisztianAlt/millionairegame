@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -11,20 +12,25 @@ public class Main {
 
         List maxLineNumber = DataManager.getMaxLineNumbers();
 
-        int level;
+        int level = -1;
+
+        String[] questionWithAnswers = new String[6];
+        String[] randomizedAnswers = new String[4];
+        boolean nextQuestionIsNotNeeded = true;
 
         boolean userInGame = true; // if game ends, we should change userInGame to false
         while (userInGame){
+            if (nextQuestionIsNotNeeded){
 
-            level = game.getCurrentLevel();
-            int upperLimit = (int) maxLineNumber.get(level-1);
+                level = game.getCurrentLevel();
+                int upperLimit = (int) maxLineNumber.get(level-1);
 
-            int randomQuestionNumber = ThreadLocalRandom.current().nextInt(1, upperLimit + 1);
+                int randomQuestionNumber = ThreadLocalRandom.current().nextInt(1, upperLimit + 1);
 
-            String[] questionWithAnswers = DataManager.readFromFile(game.getCurrentLevel(), randomQuestionNumber);
+                questionWithAnswers = DataManager.readFromFile(game.getCurrentLevel(), randomQuestionNumber);
 
 
-            String[] randomizedAnswers = new String[4];
+
 
             // NEW STUFF
             for (int i = 0; i < 4; i++) {
@@ -33,13 +39,15 @@ public class Main {
 
             Collections.shuffle(Arrays.asList(randomizedAnswers));
 
-            Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+                nextQuestionIsNotNeeded = false;
+                Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+            }
 
             boolean answerIsNotValid = true;
-            int answer = -1;
+            String answer = "wrong input";
             while (answerIsNotValid){
                 answer = Screen.getUserChoose();
-                if (answer != -1) {
+                if (answer != "wrong input") {
                     answerIsNotValid = false;
                 }
             }
@@ -59,19 +67,40 @@ public class Main {
 
             }
 
+            switch (answer){
+                case "H":
+                    // code;
+                    System.out.println("HI FROM P");
+                    break;
+                case "P":
+                    // code;
+                    System.out.println("HI");
 
-            if (randomizedAnswers[answer-1] == questionWithAnswers[1]){
-                level++;
-                game.setCurrentLevel(level);
-                if (level == 11){
-                    Screen.displayMessages("You have won the game!");
+                    break;
+                case "E":
+                    // code;
+
+                    break;
+                case "T":
+                    // code;
+                    System.out.println("TERMINATED");
                     userInGame = false;
-                } else {
-                    Screen.displayMessages("Great, you proceed to next level!");
-                }
-            } else {
-                Screen.displayMessages("You have failed. Try again.");
-                userInGame = false;
+                    break;
+                default:
+                    if (randomizedAnswers[Integer.parseInt(answer)-1] == questionWithAnswers[1]){
+                        level++;
+                        game.setCurrentLevel(level);
+                        if (level == 11){
+                            Screen.displayMessages("You have won the game!");
+                            userInGame = false;
+                        } else {
+                            nextQuestionIsNotNeeded = true;
+                            Screen.displayMessages("Great, you proceed to next level!");
+                        }
+                    } else {
+                        Screen.displayMessages("You have failed. Try again.");
+                        userInGame = false;
+                    }
             }
 
         }
