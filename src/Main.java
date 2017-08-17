@@ -107,6 +107,7 @@ public class Main {
                     break;
                 case "T":
                     try {
+                        // DataManager.saveResult(game.getUserName(), game.getPrize(level));
                         DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentLevel()));
                         Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentLevel()), game.getCurrentLevel());
                     } catch (IOException e) {
@@ -128,6 +129,7 @@ public class Main {
                             userInGame = false;
 
                             try {
+                                // DataManager.saveResult(game.getUserName(), game.getPrize(10));
                                 DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentLevel()));
                                 Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentLevel()), game.getCurrentLevel());
                             } catch (IOException e) {
@@ -159,6 +161,15 @@ public class Main {
 
                     } else {
 
+                        /*int point = 0;
+                        if (level < 3){
+                            point = 0;
+                        } else if (level < 7){
+                            point = 25;
+                        } else if (level < 10){
+                            point = 500;
+                        }*/
+
                         Screen.clear();
                         Screen.displayHeader();
                         Screen.displayProgressBar(game);
@@ -171,7 +182,8 @@ public class Main {
                         } catch (IOException e) {
                             Screen.displayMessages("High score could not be saved.");
                         }
-                        
+
+
                         userInGame = false;
                     }
 
