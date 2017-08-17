@@ -220,6 +220,7 @@ public class Screen {
     }
 
     public static void printHighScores(List<ArrayList<String>> highScores) {
+        displayHeader();
         System.out.println("\nHigh scores:\n");
         // System.out.println(highScores);
 
