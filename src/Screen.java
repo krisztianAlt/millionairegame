@@ -143,11 +143,13 @@ public class Screen {
 
     public static void credits() {
         clear();
+        System.out.println("==================");
         System.out.println("Developed by 4loop\n");
-        System.out.println("Crew:\n- Regina Császár\n- Péter Juhász\n- Márk Kovács\n- Krisztián Alt");
-
+        System.out.println("The crew:\n\033[3mRegina Császár\nPéter Juhász\nMárk Kovács\nKrisztián Alt\033[0m");
+        System.out.println("==================");
+        
         Scanner justOnePush = new Scanner(System.in);
-        System.out.println("\n\nPlease, press any button to continue.");
+        System.out.println("\n\n\nPlease, press any button to continue.");
         if (justOnePush.hasNextLine()) {
             System.out.println("Great.");
         }
