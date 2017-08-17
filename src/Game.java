@@ -8,6 +8,7 @@ public class Game {
     private String playerName;
     private ArrayList maxLineNumbers;
     private HashMap<String, Boolean> hasHelpers = new HashMap<>();
+    private HashMap<Integer, Integer> levelToPrize = new HashMap<>();
 
 
     public Game() {

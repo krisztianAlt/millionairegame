@@ -60,15 +60,25 @@ public class Main {
                 Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
             }
 
+            String answer = "no_answer";
+
             boolean answerIsNotValid = true;
-            String answer = "wrong input";
             while (answerIsNotValid){
+
+                Screen.clear();
+                Screen.displayHeader();
+                Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+
+                if (answer == "wrong input") {
+                    Screen.displayMessages("Wrong input. Enter 1-4 to select answer, " +
+                            "'H' to remove 2 wrong answers, 'P' to initiate a poll, 'E' to ask an expert.");
+                }
                 answer = Screen.getUserChoose(game);
-                if (answer != "wrong input") {
+
+                if (answer != "wrong input" && answer != "no_answer") {
                     answerIsNotValid = false;
                 }
             }
-
 
             switch (answer){
                 case "H":
@@ -101,17 +111,11 @@ public class Main {
                     break;
                 default:
                     if (randomizedAnswers[Integer.parseInt(answer)-1] == questionWithAnswers[1]){
-                        // set checkpoint:
-                        if (level == 3){
-                            game.setCheckPoint(3);
-                        } else if (level == 7){
-                            game.setCheckPoint(7);
-                        }
 
                         level++;
                         game.setCurrentLevel(level);
                         if (level == 11){
-                            Screen.displayMessages("You have won the game!");
+                            System.out.println("You have answered all questions correctly and won 5000 credits!");
                             Screen.confirmContinue();
                             userInGame = false;
                         } else {
@@ -120,10 +124,29 @@ public class Main {
                             Screen.displayHeader();
                             Screen.displayProgressBar(game);
                             Screen.displayRightAnswer(questionWithAnswers[0], questionWithAnswers[1]);
+
+                            // set checkpoint:
+                            if (level == 4){
+                                game.setCheckPoint(3);
+                                System.out.println("========================================================");
+                                System.out.println("Checkpoint 3 reached. Guaranteed prize set to XXX coins.");
+                                System.out.println("========================================================");
+                            } else if (level == 8){
+                                game.setCheckPoint(7);
+                                System.out.println("========================================================");
+                                System.out.println("Checkpoint 7 reached. Guaranteed prize set to XXX coins.");
+                                System.out.println("========================================================\n");
+                            }
+
                             Screen.confirmContinue();
                         }
+
                     } else {
-                        Screen.displayMessages("Sorry, wrong answer. Better luck next time!");
+                        Screen.clear();
+                        Screen.displayHeader();
+                        Screen.displayProgressBar(game);
+                        Screen.displayWrongAnswer(questionWithAnswers[0], questionWithAnswers[1],
+                                randomizedAnswers[Integer.parseInt(answer)-1], game.getCurrentCheckpoint());
                         Screen.confirmContinue();
                         userInGame = false;
                     }
@@ -168,7 +191,7 @@ public class Main {
             Screen.printMenu();
 
             if (invalidMenu) {
-                System.out.println("Not valid MENU.");
+                System.out.println("\nThis is not valid menu. Please enter a number between 1-4.");
                 invalidMenu = false;
             }
 

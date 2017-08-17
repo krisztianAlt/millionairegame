@@ -20,7 +20,7 @@ public class Screen {
 
     public static int selectMenu(ArrayList<Integer> validOptions) {
         Scanner select = new Scanner(System.in);
-        System.out.println("Please select an option: ");
+        System.out.println("\nPlease select an option: ");
         int option = 0;
 
 
@@ -41,13 +41,15 @@ public class Screen {
         int currentLevel = game.getCurrentLevel();
         String plusSigns = "";
         for (int index = 1; index < currentLevel; index++) {
-            plusSigns = plusSigns+"+";
+            plusSigns = plusSigns+"(+)";
         }
         String remainedLevels = "";
         for (int index=currentLevel; index<11;index++){
             remainedLevels = remainedLevels + "(" + index + ")";
         }
-        System.out.println("\n" + userName + ": " + plusSigns + remainedLevels + "\n\n");
+        System.out.print("=====================================");
+        System.out.println("\n" + userName + ": " + plusSigns + remainedLevels);
+        System.out.println("=====================================\n");
     }
 
     public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
@@ -65,6 +67,14 @@ public class Screen {
         // print helpers:
         HashMap<String, Boolean> availableHelpers = game.getHasHelpers();
         String helpers = "";
+        if (availableHelpers.get("half") == true ||
+                availableHelpers.get("poll") == true ||
+                availableHelpers.get("expert") == true) {
+            System.out.println("\n=====================");
+            System.out.println("Remaining life-lines:");
+            System.out.print("=====================");
+        }
+
         if (availableHelpers.get("half") == true){
             helpers = helpers + "50:50 (H)  ";
         }
@@ -74,14 +84,16 @@ public class Screen {
         if (availableHelpers.get("expert") == true){
             helpers = helpers + "Expert (E)";
         }
-        System.out.println("\n"+helpers);
-        System.out.println("\nTake the money & run (T)");
+        System.out.println("\n\n"+helpers);
+        System.out.println("\n========================");
+        System.out.println("Take the money & run (T)");
+        System.out.println("========================\n");
 
     }
 
     public static String getUserChoose(Game game) {
         Scanner select = new Scanner(System.in);
-        System.out.println("\nPlease select an answer: ");
+        System.out.println("Please select an answer or use a life-line: ");
 
         // construct the list of actual number buttons:
         List<Integer> numberButtons = new ArrayList<>();
@@ -136,7 +148,7 @@ public class Screen {
     }
 
     public static void displayMessages(String message){
-        System.out.println("\n" + message + "\n");
+        System.out.println(message + "\n");
     }
 
     public static void confirmContinue() {
@@ -149,21 +161,41 @@ public class Screen {
 
     public static void displayRightAnswer(String question, String rightAnswer) {
         System.out.printf("Question: %s%nAnswer given: %s", question, rightAnswer);
-        displayMessages("\nCORRECT ANSWER! You may proceed to the NEXT LEVEL!");
+        System.out.println("\n\n================");
+        System.out.println("CORRECT ANSWER!");
+        System.out.println("================");
+        System.out.println("\nYou may proceed to the NEXT LEVEL!\n");
+    }
+
+    public static void displayWrongAnswer(String question, String rightAnswer, String givenAnswer, int checkPoint) {
+        System.out.printf("Question: %s%nRight answer: %s", question, rightAnswer);
+        System.out.printf("Given answer: %s", givenAnswer);
+        System.out.println("\n\n================");
+        System.out.println("WRONG ANSWER!");
+        System.out.println("================");
+        switch (checkPoint) {
+            case 0:
+                System.out.println("\nSorry, you have to go home with EMPTY hands!\n");
+                break;
+            case 3:
+                System.out.println("\nYou won 25 coins.\n");
+                break;
+            case 7:
+                System.out.println("\nYou won 500 coins.\n");
+                break;
+        }
     }
 
     public static void credits() {
         clear();
-        System.out.println("==================");
+        displayHeader();
+
+        System.out.println("\n==================");
         System.out.println("Developed by 4loop\n");
         System.out.println("The crew:\n\033[3mRegina Császár\nPéter Juhász\nMárk Kovács\nKrisztián Alt\033[0m");
-        System.out.println("==================");
+        System.out.println("==================\n\n");
 
-        Scanner justOnePush = new Scanner(System.in);
-        System.out.println("\n\n\nPlease, press any button to continue.");
-        if (justOnePush.hasNextLine()) {
-            System.out.println("Great.");
-        }
+        confirmContinue();
     }
 
     public static void timer(int seconds) throws InterruptedException {
