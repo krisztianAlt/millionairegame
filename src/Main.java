@@ -30,6 +30,10 @@ public class Main {
 
         Game game = new Game();
 
+        System.out.println("\n\nLOADING...");
+        Screen.playSound("start");
+        Screen.clear();
+
         String userName = retrieveUserName();
         game.setUserName(userName);
 

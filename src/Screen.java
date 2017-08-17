@@ -1,5 +1,7 @@
+import java.io.File;
 import java.util.*;
-
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Screen {
 
@@ -294,6 +296,22 @@ public class Screen {
         displayProgressBar(name, level);
         System.out.printf("Congratulations! %s, you have won %d coins.\n\n", name, point);
         confirmContinue();
+    }
+
+    public static void playSound(String filename) {
+
+        File fileWithPath = new File("../../../sound/" + filename + ".wav");
+
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(fileWithPath));
+            clip.start();
+
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+        }
+        catch (Exception e) {
+
+        }
     }
 
 }
