@@ -1,6 +1,7 @@
 
 import com.sun.deploy.util.StringUtils;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -213,8 +214,35 @@ public class Screen {
         System.out.println("Time's Up!");
     }
 
+
     public static void displayHeader() {
         System.out.println("\nWHO WANTS TO BE A MILLIONAIRE?\n");
+    }
+
+    public static void printHighScores(List<ArrayList<String>> highScores) {
+        System.out.println("\nHigh scores:\n");
+        // System.out.println(highScores);
+
+        int[] output = new int[highScores.size()];
+        int upperLimit = 10;
+        if (highScores.size() == 0) {
+            System.out.println("The list is empty.");
+        } else {
+            if (highScores.size()<upperLimit){
+                upperLimit = highScores.size();
+            }
+
+            for (int i = 0; i< upperLimit; i++){
+                System.out.printf("%d. %s %s%n", (i+1), highScores.get(i).get(0), highScores.get(i).get(1));
+            }
+        }
+
+        Scanner justOnePush = new Scanner(System.in);
+        System.out.println("\n\n\nPlease, press any button to continue.");
+        if (justOnePush.hasNextLine()) {
+            System.out.println("Great.");
+        }
+
     }
 
 }

@@ -1,14 +1,12 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 
 public class DataManager {
 
     private static String filePath = "../../../data/";
     private static String fileName = "questions_level_";
+    private static String highScoreFileName = "highscores";
     private static String fileExtension = ".csv";
 
 
@@ -58,6 +56,50 @@ public class DataManager {
             System.out.println("File not found: " + error);
         }
         return splittedLine;
+    }
+
+    public static List<ArrayList<String>> getHighScores() {
+        // TreeMap<Integer, String> highScores = new TreeMap<Integer, String>();
+        List<ArrayList<String>> highScores = new ArrayList<>();
+
+        try {
+            File highScoresFile = new File( filePath + highScoreFileName + fileExtension);
+            Scanner fileContent = new Scanner(highScoresFile);
+
+            String[] splittedLine = {};
+            while (fileContent.hasNextLine()) {
+                String line = fileContent.nextLine();
+                splittedLine = line.split(";");
+                // highScores.put(Integer.parseInt(splittedLine[1]), splittedLine[0]);
+                ArrayList<String> nextUserData = new ArrayList<>();
+                nextUserData.add(splittedLine[0]);
+                nextUserData.add(splittedLine[1]);
+
+                highScores.add(nextUserData);
+            }
+
+            highScores.sort((p1,p2)->p1.get(1).compareTo(p2.get(1)));
+            Collections.reverse(highScores);
+
+        }
+        catch (FileNotFoundException error) {
+            System.out.println("File not found: " + error);
+        }
+
+        return highScores;
+    }
+
+    public static void saveResult(String name, int point) throws IOException {
+        System.out.println("DATAMANAGER MESSAGE: " + name + " " + point);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + highScoreFileName + fileExtension, true));
+            writer.append(name + ";" + point + "\n");
+            writer.close();
+
+        } catch (FileNotFoundException error) {
+            System.out.println("File not found: " + error);
+        }
+
     }
 
 }

@@ -19,6 +19,17 @@ public class Game {
         hasHelpers.put("poll", true);
         hasHelpers.put("expert", true);
 
+        levelToPrize.put(1, 5);
+        levelToPrize.put(2, 10);
+        levelToPrize.put(3, 25);
+        levelToPrize.put(4, 50);
+        levelToPrize.put(5, 100);
+        levelToPrize.put(6, 250);
+        levelToPrize.put(7, 500);
+        levelToPrize.put(8, 1000);
+        levelToPrize.put(9, 2000);
+        levelToPrize.put(10, 5000);
+
     }
 
     public int getCurrentLevel(){
