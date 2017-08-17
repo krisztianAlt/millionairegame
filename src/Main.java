@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Main {
     }
 
 
-    public static void processGame() {
+    public static void processGame() throws IOException {
         Game game = new Game();
 
         String userName = retrieveUserName();
@@ -86,6 +87,11 @@ public class Main {
                     Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;
                 case "T":
+                    try {
+                        DataManager.saveResult(game.getUserName(), 300);
+                    } catch (IOException e) {
+                        Screen.displayMessages("High score could not be saved.");
+                    }
                     Screen.displayMessages("You are coward, but it's not problem, thanks for playing, really.");
                     userInGame = false;
                     break;
@@ -102,11 +108,14 @@ public class Main {
                         game.setCurrentLevel(level);
                         if (level == 11){
                             Screen.displayMessages("You have won the game!");
+                            try {
+                                DataManager.saveResult(game.getUserName(), 1255);
+                            } catch (IOException e) {
+                                Screen.displayMessages("High score could not be saved.");
+                            }
                             userInGame = false;
                         } else {
                             nextQuestionIsNotNeeded = true;
-
-
                             Screen.displayMessages("Great, you proceed to next level!");
                         }
                     } else {
@@ -136,7 +145,7 @@ public class Main {
         return userName;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         boolean invalidMenu = false;
         boolean exitGame = false;
@@ -165,7 +174,10 @@ public class Main {
             if (option == 1) {
                 processGame();
             } else if (option == 2) {
-                System.out.println("High Scores");
+                List<ArrayList<String>> highScores = new ArrayList<>();
+                highScores = DataManager.getHighScores();
+                Screen.printHighScores(highScores);
+
             } else if (option == 3) {
                 // System.out.println("Credits");
                 Screen.credits();

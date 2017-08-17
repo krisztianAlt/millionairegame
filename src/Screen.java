@@ -1,6 +1,7 @@
 
 import com.sun.deploy.util.StringUtils;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -147,6 +148,35 @@ public class Screen {
         System.out.println("Developed by 4loop\n");
         System.out.println("The crew:\n\033[3mRegina Császár\nPéter Juhász\nMárk Kovács\nKrisztián Alt\033[0m");
         System.out.println("==================");
+
+        Scanner justOnePush = new Scanner(System.in);
+        System.out.println("\n\n\nPlease, press any button to continue.");
+        if (justOnePush.hasNextLine()) {
+            System.out.println("Great.");
+        }
+    }
+
+    public static void printHighScores(List<ArrayList<String>> highScores) {
+        System.out.println("\nHigh scores:\n");
+        // System.out.println(highScores);
+
+        int[] output = new int[highScores.size()];
+        int upperLimit = 10;
+        if (highScores.size() == 0) {
+            System.out.println("The list is empty.");
+        } else {
+            if (highScores.size()<upperLimit){
+                upperLimit = highScores.size();
+            }
+            for (int i = 0; i< upperLimit; i++){
+                /*String firstPadding;
+                if (i < 9){
+                    firstPadding
+                }*/
+                System.out.println((i+1) + ". " + highScores.get(i).get(0) + " " + highScores.get(i).get(1));
+                //output[i] = highScores.get(i).get(0);
+            }
+        }
 
         Scanner justOnePush = new Scanner(System.in);
         System.out.println("\n\n\nPlease, press any button to continue.");
