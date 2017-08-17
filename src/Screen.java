@@ -168,13 +168,9 @@ public class Screen {
             if (highScores.size()<upperLimit){
                 upperLimit = highScores.size();
             }
+
             for (int i = 0; i< upperLimit; i++){
-                /*String firstPadding;
-                if (i < 9){
-                    firstPadding
-                }*/
-                System.out.println((i+1) + ". " + highScores.get(i).get(0) + " " + highScores.get(i).get(1));
-                //output[i] = highScores.get(i).get(0);
+                System.out.printf("%d. %s %s%n", (i+1), highScores.get(i).get(0), highScores.get(i).get(1));
             }
         }
 
