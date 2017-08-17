@@ -83,6 +83,15 @@ public class Main {
                     break;
                 case "E":
                     game.setHasHelpers("expert", false);
+
+                    // __TODO__: add confirm message to start! Get Input from keyboard;
+                    try {
+                        Screen.timer(10);
+                    }
+                    catch (InterruptedException e) {
+                        Screen.displayMessages("Time is over!");
+                    }
+
                     Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;
                 case "T":
@@ -108,13 +117,13 @@ public class Main {
                         } else {
                             nextQuestionIsNotNeeded = true;
                             Screen.clear();
-                            System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
+                            Screen.displayHeader();
                             Screen.displayProgressBar(game);
                             Screen.displayRightAnswer(questionWithAnswers[0], questionWithAnswers[1]);
                             Screen.confirmContinue();
                         }
                     } else {
-                        Screen.displayMessages("You have failed. Try again.");
+                        Screen.displayMessages("Sorry, wrong answer. Better luck next time!");
                         Screen.confirmContinue();
                         userInGame = false;
                     }
@@ -123,8 +132,6 @@ public class Main {
         }
 
     }
-
-
 
     public static String retrieveUserName() {
 
@@ -157,6 +164,7 @@ public class Main {
         while (!exitGame) {
             Screen.clear();
 
+            Screen.displayHeader();
             Screen.printMenu();
 
             if (invalidMenu) {

@@ -52,7 +52,7 @@ public class Screen {
 
     public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
         clear();
-        System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
+        displayHeader();
         displayProgressBar(game);
 
         // print question and answers:
@@ -127,6 +127,7 @@ public class Screen {
         String userName;
 
         Scanner name = new Scanner(System.in);
+        displayHeader();
         System.out.println("Please enter your name: ");
         userName = name.nextLine();
 
@@ -140,7 +141,7 @@ public class Screen {
 
     public static void confirmContinue() {
         Scanner justOnePush = new Scanner(System.in);
-        System.out.println("Please, press any ENTER to continue.");
+        System.out.println("Please, press ENTER to continue.");
         if (justOnePush.hasNextLine()) {
             System.out.println("Great.");
         }
@@ -163,6 +164,25 @@ public class Screen {
         if (justOnePush.hasNextLine()) {
             System.out.println("Great.");
         }
+    }
+
+    public static void timer(int seconds) throws InterruptedException {
+        long delay = seconds * 1000;
+        String printedSeconds = "";
+        do {
+            printedSeconds += seconds + " ";
+            clear();
+            System.out.println(printedSeconds);
+            Thread.sleep(1000);
+            seconds = seconds - 1;
+            delay = delay - 1000;
+        }
+        while (delay != 0);
+        System.out.println("Time's Up!");
+    }
+
+    public static void displayHeader() {
+        System.out.println("\nWHO WANTS TO BE A MILLIONAIRE?\n");
     }
 
 }
