@@ -4,6 +4,25 @@ import java.util.ArrayList;
 
 public class Main {
 
+    public static String[] halveAnswers(String[] randomizedAnswers, String rightAnswer) {
+        int randomIndex = ThreadLocalRandom.current().nextInt(1, 4);
+        int counter = 1;
+        for (int i = 0; i < 4; i++) {
+            if (randomizedAnswers[i] == rightAnswer) {
+                continue;
+            } else if (counter == randomIndex) {
+                counter++;
+            } else {
+                randomizedAnswers[i] = "";
+                counter++;
+            }
+
+        }
+
+        return randomizedAnswers;
+    }
+
+
     public static void processGame() {
         Game game = new Game();
 
@@ -53,22 +72,8 @@ public class Main {
 
             switch (answer){
                 case "H":
+                    randomizedAnswers = halveAnswers(randomizedAnswers, questionWithAnswers[1]);
                     game.setHasHelpers("half", false);
-
-                    // NEW STUFF
-                    int randomIndex = ThreadLocalRandom.current().nextInt(1, 4);
-                    int counter = 1;
-                    for (int i = 0; i < 4; i++) {
-                        if (randomizedAnswers[i] == questionWithAnswers[1]) {
-                            continue;
-                        } else if (counter == randomIndex) {
-                            counter++;
-                        } else {
-                            randomizedAnswers[i] = "";
-                            counter++;
-                        }
-
-                    }
                     System.out.println("RANDIMOZED WITH TWO HIDDEN ANSWER: " + Arrays.toString(randomizedAnswers));
                     Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;

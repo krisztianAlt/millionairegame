@@ -60,8 +60,7 @@ public class Screen {
         }
 
         // print helpers:
-        HashMap<String, Boolean> availableHelpers = new HashMap<>();
-        availableHelpers = game.getHasHelpers();
+        HashMap<String, Boolean> availableHelpers = game.getHasHelpers();
         String helpers = "";
         if (availableHelpers.get("half") == true){
             helpers = helpers + "50:50 (H)  ";
