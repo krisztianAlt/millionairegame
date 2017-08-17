@@ -44,7 +44,7 @@ public class Main {
             boolean answerIsNotValid = true;
             String answer = "wrong input";
             while (answerIsNotValid){
-                answer = Screen.getUserChoose();
+                answer = Screen.getUserChoose(game);
                 if (answer != "wrong input") {
                     answerIsNotValid = false;
                 }

@@ -1,10 +1,7 @@
 
 import com.sun.deploy.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-
+import java.util.*;
 
 
 public class Screen {
@@ -42,11 +39,11 @@ public class Screen {
         clear();
         System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
 
-        // progress bar:
+        // print progress bar:
         String userName = game.getUserName();
         int currentLevel = game.getCurrentLevel();
         String plusSigns = "";
-        for (int index=1;index<currentLevel;index++) {
+        for (int index = 1; index < currentLevel; index++) {
             plusSigns = plusSigns+"+";
         }
         String remainedLevels = "";
@@ -55,18 +52,17 @@ public class Screen {
         }
         System.out.println("\n" + userName + ": " + plusSigns + remainedLevels + "\n\n");
 
-        // question and answers:
+        // print question and answers:
         System.out.println("Question: " + questionWithAnswers[0] + "\n");
-
         // NEW STUFF
         for(int i = 0; i < 4; i++) {
             System.out.println((i + 1) + ". " + randomizedAnswers[i]);
         }
-        // helpers:
+
+        // print helpers:
         HashMap<String, Boolean> availableHelpers = new HashMap<>();
         availableHelpers = game.getHasHelpers();
         String helpers = "";
-
         if (availableHelpers.get("half") == true){
             helpers = helpers + "50:50 (H)  ";
         }
@@ -77,25 +73,46 @@ public class Screen {
             helpers = helpers + "Expert (E)";
         }
         System.out.println("\n"+helpers);
-
         System.out.println("\nTake the money & run (T)");
 
     }
 
-    public static String getUserChoose() {
+    public static String getUserChoose(Game game) {
         Scanner select = new Scanner(System.in);
         System.out.println("\nPlease select an answer: ");
 
+        // construct the list of actual number buttons:
+        List<Integer> numberButtons = new ArrayList<>();
+        for (int numOfButton = 1; numOfButton < 5; numOfButton++){
+            numberButtons.add(numOfButton-1, numOfButton);
+        }
+
+        // construct the list of actual helper buttons:
+        HashMap<String, Boolean> availableHelpers = new HashMap<>();
+        availableHelpers = game.getHasHelpers();
+        List<String> helperButtons = new ArrayList<>();
+        if (availableHelpers.get("half") == true){
+            helperButtons.add("H");
+        }
+        if (availableHelpers.get("poll") == true){
+            helperButtons.add("P");
+        }
+        if (availableHelpers.get("expert") == true){
+            helperButtons.add("E");
+        }
+        helperButtons.add("T");
+
+        // get the user's choice:
         if (select.hasNextInt()) {
             Integer option = select.nextInt();
 
-            if (option == 1 || option == 2 || option == 3 || option == 4) {
+            if (numberButtons.contains(option)) {
                 return option.toString();
             }
         } else if(select.hasNextLine()){
             String option = select.nextLine().toUpperCase();
 
-            if (option.equals("H") || option.equals("P") || option.equals("E") || option.equals("T")){
+            if (helperButtons.contains(option)){
                 return option;
             }
         }
@@ -117,13 +134,11 @@ public class Screen {
 
     public static void displayMessages(String message){
         Scanner justOnePush = new Scanner(System.in);
-
         System.out.println("\n" + message + "\n");
         System.out.println("Please, press any button to continue.");
         if (justOnePush.hasNextLine()) {
             System.out.println("Great.");
         }
-
     }
 
 }
