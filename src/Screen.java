@@ -141,5 +141,15 @@ public class Screen {
         }
     }
 
+    public static void credits() {
+        clear();
+        System.out.println("Developed by 4loop\n");
+        System.out.println("Crew:\n- Regina Császár\n- Péter Juhász\n- Márk Kovács\n- Krisztián Alt");
 
+        Scanner justOnePush = new Scanner(System.in);
+        System.out.println("\n\nPlease, press any button to continue.");
+        if (justOnePush.hasNextLine()) {
+            System.out.println("Great.");
+        }
+    }
 }

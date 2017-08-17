@@ -168,7 +168,7 @@ public class Main {
                 System.out.println("High Scores");
             } else if (option == 3) {
                 // System.out.println("Credits");
-                
+                Screen.credits();
             } else if (option == 4) {
                 System.out.println("Exiting Game");
                 System.exit(0);
