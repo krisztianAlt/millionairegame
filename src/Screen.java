@@ -35,11 +35,8 @@ public class Screen {
         return -1;
     }
 
-    public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
-        clear();
-        System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
+    public static void displayProgressBar(Game game) {
 
-        // print progress bar:
         String userName = game.getUserName();
         int currentLevel = game.getCurrentLevel();
         String plusSigns = "";
@@ -51,6 +48,12 @@ public class Screen {
             remainedLevels = remainedLevels + "(" + index + ")";
         }
         System.out.println("\n" + userName + ": " + plusSigns + remainedLevels + "\n\n");
+    }
+
+    public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
+        clear();
+        System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
+        displayProgressBar(game);
 
         // print question and answers:
         System.out.println("Question: " + questionWithAnswers[0] + "\n");
@@ -128,16 +131,23 @@ public class Screen {
         userName = name.nextLine();
 
         return userName;
-
     }
 
     public static void displayMessages(String message){
-        Scanner justOnePush = new Scanner(System.in);
         System.out.println("\n" + message + "\n");
-        System.out.println("Please, press any button to continue.");
+    }
+
+    public static void confirmContinue() {
+        Scanner justOnePush = new Scanner(System.in);
+        System.out.println("Please, press any ENTER to continue.");
         if (justOnePush.hasNextLine()) {
             System.out.println("Great.");
         }
+    }
+
+    public static void displayRightAnswer(String question, String rightAnswer) {
+        System.out.printf("Question: %s%nAnswer given: %s", question, rightAnswer);
+        displayMessages("\nCORRECT ANSWER! You may proceed to the NEXT LEVEL!");
     }
 
 }

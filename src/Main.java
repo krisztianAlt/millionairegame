@@ -87,6 +87,7 @@ public class Main {
                     break;
                 case "T":
                     Screen.displayMessages("You are coward, but it's not problem, thanks for playing, really.");
+                    Screen.confirmContinue();
                     userInGame = false;
                     break;
                 default:
@@ -95,13 +96,19 @@ public class Main {
                         game.setCurrentLevel(level);
                         if (level == 11){
                             Screen.displayMessages("You have won the game!");
+                            Screen.confirmContinue();
                             userInGame = false;
                         } else {
                             nextQuestionIsNotNeeded = true;
-                            Screen.displayMessages("Great, you proceed to next level!");
+                            Screen.clear();
+                            System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
+                            Screen.displayProgressBar(game);
+                            Screen.displayRightAnswer(questionWithAnswers[0], questionWithAnswers[1]);
+                            Screen.confirmContinue();
                         }
                     } else {
                         Screen.displayMessages("You have failed. Try again.");
+                        Screen.confirmContinue();
                         userInGame = false;
                     }
             }
