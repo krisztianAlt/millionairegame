@@ -53,6 +53,20 @@ public class Screen {
         System.out.println("=====================================\n");
     }
 
+    public static void displayProgressBar(String userName, int currentLevel) {
+        String plusSigns = "";
+        for (int index = 1; index < currentLevel; index++) {
+            plusSigns = plusSigns+"(+)";
+        }
+        String remainedLevels = "";
+        for (int index=currentLevel; index<11;index++){
+            remainedLevels = remainedLevels + "(" + index + ")";
+        }
+        System.out.print("=====================================");
+        System.out.println("\n" + userName + ": " + plusSigns + remainedLevels);
+        System.out.println("=====================================\n");
+    }
+
     public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
         clear();
         displayHeader();
@@ -156,7 +170,7 @@ public class Screen {
         Scanner justOnePush = new Scanner(System.in);
         System.out.println("Please, press ENTER to continue.");
         if (justOnePush.hasNextLine()) {
-            System.out.println("Great.");
+            clear();
         }
     }
 
@@ -241,9 +255,17 @@ public class Screen {
         Scanner justOnePush = new Scanner(System.in);
         System.out.println("\n\n\nPlease, press any button to continue.");
         if (justOnePush.hasNextLine()) {
-            System.out.println("Great.");
+            clear();
         }
 
+    }
+
+    public static void endGame(String name, int point, int level) {
+        clear();
+        displayHeader();
+        displayProgressBar(name, level);
+        System.out.printf("Congratulations! %s, you have won %d coins.\n\n", name, point);
+        confirmContinue();
     }
 
 }

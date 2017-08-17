@@ -107,7 +107,8 @@ public class Main {
                     break;
                 case "T":
                     try {
-                        DataManager.saveResult(game.getUserName(), 300);
+                        DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentLevel()));
+                        Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentLevel()), game.getCurrentLevel());
                     } catch (IOException e) {
                         Screen.displayMessages("High score could not be saved.");
                     }
@@ -127,7 +128,8 @@ public class Main {
                             userInGame = false;
 
                             try {
-                                DataManager.saveResult(game.getUserName(), 1255);
+                                DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentLevel()));
+                                Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentLevel()), game.getCurrentLevel());
                             } catch (IOException e) {
                                 Screen.displayMessages("High score could not be saved.");
                             }
@@ -143,12 +145,12 @@ public class Main {
                             if (level == 4){
                                 game.setCheckPoint(3);
                                 System.out.println("========================================================");
-                                System.out.println("Checkpoint 3 reached. Guaranteed prize set to XXX coins.");
-                                System.out.println("========================================================");
+                                System.out.printf("Checkpoint 3 reached. Guaranteed prize set to %d coins.%n", game.getPrize(game.getCurrentLevel()));
+                                System.out.println("========================================================\n");
                             } else if (level == 8){
                                 game.setCheckPoint(7);
                                 System.out.println("========================================================");
-                                System.out.println("Checkpoint 7 reached. Guaranteed prize set to XXX coins.");
+                                System.out.printf("Checkpoint 7 reached. Guaranteed prize set to %d coins.%n", game.getPrize(game.getCurrentLevel()));
                                 System.out.println("========================================================\n");
                             }
 
@@ -164,12 +166,12 @@ public class Main {
                                 randomizedAnswers[Integer.parseInt(answer)-1], game.getCurrentCheckpoint());
 
                         try {
-                            DataManager.saveResult(game.getUserName(), 100);
+                            DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentCheckpoint()));
+                            Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentCheckpoint()), game.getCurrentLevel());
                         } catch (IOException e) {
                             Screen.displayMessages("High score could not be saved.");
                         }
-
-                        Screen.confirmContinue();
+                        
                         userInGame = false;
                     }
 

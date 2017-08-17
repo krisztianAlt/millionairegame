@@ -90,7 +90,7 @@ public class DataManager {
     }
 
     public static void saveResult(String name, int point) throws IOException {
-        System.out.println("DATAMANAGER MESSAGE: " + name + " " + point);
+
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + highScoreFileName + fileExtension, true));
             writer.append(name + ";" + point + "\n");

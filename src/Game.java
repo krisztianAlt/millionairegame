@@ -19,6 +19,7 @@ public class Game {
         hasHelpers.put("poll", true);
         hasHelpers.put("expert", true);
 
+        levelToPrize.put(0, 0);
         levelToPrize.put(1, 5);
         levelToPrize.put(2, 10);
         levelToPrize.put(3, 25);
@@ -75,6 +76,12 @@ public class Game {
     public void setCheckPoint(int newCheckPoint){
 
         this.checkPoint = newCheckPoint;
+
+    }
+
+    public int getPrize(int level){
+
+        return this.levelToPrize.get(level);
 
     }
 }
