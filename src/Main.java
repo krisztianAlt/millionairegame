@@ -61,15 +61,25 @@ public class Main {
                 Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
             }
 
+            String answer = "no_answer";
+
             boolean answerIsNotValid = true;
-            String answer = "wrong input";
             while (answerIsNotValid){
+
+                Screen.clear();
+                Screen.displayHeader();
+                Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+
+                if (answer == "wrong input") {
+                    Screen.displayMessages("Wrong input. Enter 1-4 to select answer, " +
+                            "'H' to remove 2 wrong answers, 'P' to initiate a poll, 'E' to ask an expert.");
+                }
                 answer = Screen.getUserChoose(game);
-                if (answer != "wrong input") {
+
+                if (answer != "wrong input" && answer != "no_answer") {
                     answerIsNotValid = false;
                 }
             }
-
 
             switch (answer){
                 case "H":
@@ -84,6 +94,15 @@ public class Main {
                     break;
                 case "E":
                     game.setHasHelpers("expert", false);
+
+                    // __TODO__: add confirm message to start! Get Input from keyboard;
+                    try {
+                        Screen.timer(10);
+                    }
+                    catch (InterruptedException e) {
+                        Screen.displayMessages("Time is over!");
+                    }
+
                     Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
                     break;
                 case "T":
@@ -93,56 +112,82 @@ public class Main {
                         Screen.displayMessages("High score could not be saved.");
                     }
                     Screen.displayMessages("You are coward, but it's not problem, thanks for playing, really.");
+                    Screen.confirmContinue();
                     userInGame = false;
                     break;
                 default:
                     if (randomizedAnswers[Integer.parseInt(answer)-1] == questionWithAnswers[1]){
-                        // set checkpoint:
-                        if (level == 3){
-                            game.setCheckPoint(3);
-                        } else if (level == 7){
-                            game.setCheckPoint(7);
-                        }
 
                         level++;
                         game.setCurrentLevel(level);
                         if (level == 11){
-                            Screen.displayMessages("You have won the game!");
+
+
+                            System.out.println("You have answered all questions correctly and won 5000 credits!");
+                            Screen.confirmContinue();
+                            userInGame = false;
 
                             try {
                                 DataManager.saveResult(game.getUserName(), game.getPrize(10));
                             } catch (IOException e) {
                                 Screen.displayMessages("High score could not be saved.");
                             }
-                            userInGame = false;
+
                         } else {
                             nextQuestionIsNotNeeded = true;
-                            Screen.displayMessages("Great, you proceed to next level!");
+                            Screen.clear();
+                            Screen.displayHeader();
+                            Screen.displayProgressBar(game);
+                            Screen.displayRightAnswer(questionWithAnswers[0], questionWithAnswers[1]);
+
+                            // set checkpoint:
+                            if (level == 4){
+                                game.setCheckPoint(3);
+                                System.out.println("========================================================");
+                                System.out.println("Checkpoint 3 reached. Guaranteed prize set to XXX coins.");
+                                System.out.println("========================================================");
+                            } else if (level == 8){
+                                game.setCheckPoint(7);
+                                System.out.println("========================================================");
+                                System.out.println("Checkpoint 7 reached. Guaranteed prize set to XXX coins.");
+                                System.out.println("========================================================\n");
+                            }
+
+                            Screen.confirmContinue();
                         }
+
                     } else {
-                        int point = 0;
+
+                        /*int point = 0;
                         if (level < 3){
                             point = 0;
                         } else if (level < 7){
                             point = 25;
                         } else if (level < 10){
                             point = 500;
-                        }
+                        }*/
+
+                        Screen.clear();
+                        Screen.displayHeader();
+                        Screen.displayProgressBar(game);
+                        Screen.displayWrongAnswer(questionWithAnswers[0], questionWithAnswers[1],
+                                randomizedAnswers[Integer.parseInt(answer)-1], game.getCurrentCheckpoint());
+
                         try {
-                            DataManager.saveResult(game.getUserName(),point);
+                            DataManager.saveResult(game.getUserName(),game.getPrize(game.getCurrentCheckpoint()));
                         } catch (IOException e) {
                             Screen.displayMessages("High score could not be saved.");
                         }
-                        Screen.displayMessages("You have failed. Try again.");
+
+                        Screen.confirmContinue();
                         userInGame = false;
                     }
+
             }
 
         }
 
     }
-
-
 
     public static String retrieveUserName() {
 
@@ -175,10 +220,11 @@ public class Main {
         while (!exitGame) {
             Screen.clear();
 
+            Screen.displayHeader();
             Screen.printMenu();
 
             if (invalidMenu) {
-                System.out.println("Not valid MENU.");
+                System.out.println("\nThis is not valid menu. Please enter a number between 1-4.");
                 invalidMenu = false;
             }
 
