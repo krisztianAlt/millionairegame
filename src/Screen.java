@@ -147,7 +147,7 @@ public class Screen {
         System.out.println("Developed by 4loop\n");
         System.out.println("The crew:\n\033[3mRegina Császár\nPéter Juhász\nMárk Kovács\nKrisztián Alt\033[0m");
         System.out.println("==================");
-        
+
         Scanner justOnePush = new Scanner(System.in);
         System.out.println("\n\n\nPlease, press any button to continue.");
         if (justOnePush.hasNextLine()) {
