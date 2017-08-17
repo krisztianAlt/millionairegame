@@ -88,7 +88,7 @@ public class Main {
                     break;
                 case "T":
                     try {
-                        DataManager.saveResult(game.getUserName(), 300);
+                        DataManager.saveResult(game.getUserName(), game.getPrize(level));
                     } catch (IOException e) {
                         Screen.displayMessages("High score could not be saved.");
                     }
@@ -108,8 +108,9 @@ public class Main {
                         game.setCurrentLevel(level);
                         if (level == 11){
                             Screen.displayMessages("You have won the game!");
+
                             try {
-                                DataManager.saveResult(game.getUserName(), 1255);
+                                DataManager.saveResult(game.getUserName(), game.getPrize(10));
                             } catch (IOException e) {
                                 Screen.displayMessages("High score could not be saved.");
                             }
@@ -119,8 +120,16 @@ public class Main {
                             Screen.displayMessages("Great, you proceed to next level!");
                         }
                     } else {
+                        int point = 0;
+                        if (level < 3){
+                            point = 0;
+                        } else if (level < 7){
+                            point = 25;
+                        } else if (level < 10){
+                            point = 500;
+                        }
                         try {
-                            DataManager.saveResult(game.getUserName(), 100);
+                            DataManager.saveResult(game.getUserName(),point);
                         } catch (IOException e) {
                             Screen.displayMessages("High score could not be saved.");
                         }

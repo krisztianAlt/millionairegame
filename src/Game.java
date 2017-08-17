@@ -77,4 +77,11 @@ public class Game {
         this.checkPoint = newCheckPoint;
 
     }
+
+    public int getPrize(int level){
+
+        return this.levelToPrize.get(level);
+
+    }
+
 }
