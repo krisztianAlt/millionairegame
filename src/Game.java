@@ -30,6 +30,7 @@ public class Game {
         levelToPrize.put(8, 1000);
         levelToPrize.put(9, 2000);
         levelToPrize.put(10, 5000);
+        levelToPrize.put(11, 5000);
 
     }
 

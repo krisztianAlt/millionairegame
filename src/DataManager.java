@@ -103,7 +103,6 @@ public class DataManager {
     }
 
     public static List sortHighScore(ArrayList<ArrayList<String>> inputList) {
-        System.out.println(inputList.size());
         for (int i = 0; i < inputList.size()-1; i++) {
             for (int j = 0; j < inputList.size()-1; j++) {
                 if (Integer.parseInt(inputList.get(j).get(1)) < Integer.parseInt(inputList.get(j + 1).get(1))) {
