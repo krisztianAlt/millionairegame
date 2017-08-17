@@ -119,6 +119,11 @@ public class Main {
                             Screen.displayMessages("Great, you proceed to next level!");
                         }
                     } else {
+                        try {
+                            DataManager.saveResult(game.getUserName(), 100);
+                        } catch (IOException e) {
+                            Screen.displayMessages("High score could not be saved.");
+                        }
                         Screen.displayMessages("You have failed. Try again.");
                         userInGame = false;
                     }
