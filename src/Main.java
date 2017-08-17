@@ -91,6 +91,13 @@ public class Main {
                     break;
                 default:
                     if (randomizedAnswers[Integer.parseInt(answer)-1] == questionWithAnswers[1]){
+                        // set checkpoint:
+                        if (level == 3){
+                            game.setCheckPoint(3);
+                        } else if (level == 7){
+                            game.setCheckPoint(7);
+                        }
+
                         level++;
                         game.setCurrentLevel(level);
                         if (level == 11){
@@ -98,6 +105,8 @@ public class Main {
                             userInGame = false;
                         } else {
                             nextQuestionIsNotNeeded = true;
+
+
                             Screen.displayMessages("Great, you proceed to next level!");
                         }
                     } else {
@@ -158,7 +167,8 @@ public class Main {
             } else if (option == 2) {
                 System.out.println("High Scores");
             } else if (option == 3) {
-                System.out.println("Credits");
+                // System.out.println("Credits");
+                
             } else if (option == 4) {
                 System.out.println("Exiting Game");
                 System.exit(0);

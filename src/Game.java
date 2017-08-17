@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Game {
     private int currentLevel;
+    private int checkPoint;
     private String playerName;
     private ArrayList maxLineNumbers;
     private HashMap<String, Boolean> hasHelpers = new HashMap<>();
@@ -11,6 +12,7 @@ public class Game {
 
     public Game() {
         this.currentLevel = 1;
+        this.checkPoint = 0;
 
         hasHelpers.put("half", true);
         hasHelpers.put("poll", true);
@@ -54,5 +56,13 @@ public class Game {
 
     }
 
+    public int getCurrentCheckpoint(){
+        return this.checkPoint;
+    }
 
+    public void setCheckPoint(int newCheckPoint){
+
+        this.checkPoint = newCheckPoint;
+
+    }
 }

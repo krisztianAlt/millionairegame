@@ -37,6 +37,7 @@ public class Screen {
 
     public static void displayQuestion(Game game, String[] questionWithAnswers, String[] randomizedAnswers){
         clear();
+
         System.out.println("WHO WANTS TO BE A MILLIONAIRE?");
 
         // print progress bar:
@@ -139,5 +140,6 @@ public class Screen {
             System.out.println("Great.");
         }
     }
+
 
 }
