@@ -11,6 +11,7 @@ public class DataManager {
 
 
     public static List getMaxLineNumbers() {
+
         List<Integer> maxLineNumbers = new ArrayList<>();
 
         for (int index = 1; index < 11; index++) {
@@ -18,7 +19,6 @@ public class DataManager {
             try {
                 File questionFile = new File( filePath + fileName + index + fileExtension);
                 Scanner fileContent = new Scanner(questionFile);
-
 
                 while (fileContent.hasNextLine()) {
                     String line = fileContent.nextLine();
@@ -59,7 +59,6 @@ public class DataManager {
     }
 
     public static List<ArrayList<String>> getHighScores() {
-        // TreeMap<Integer, String> highScores = new TreeMap<Integer, String>();
         List<ArrayList<String>> highScores = new ArrayList<>();
 
         try {
@@ -70,16 +69,14 @@ public class DataManager {
             while (fileContent.hasNextLine()) {
                 String line = fileContent.nextLine();
                 splittedLine = line.split(";");
-                // highScores.put(Integer.parseInt(splittedLine[1]), splittedLine[0]);
                 ArrayList<String> nextUserData = new ArrayList<>();
                 nextUserData.add(splittedLine[0]);
                 nextUserData.add(splittedLine[1]);
 
                 highScores.add(nextUserData);
             }
-            // highScores.sort((p1,p2)->p1.get(1).compareTo(p2.get(1)));
+
             highScores = sortHighScore((ArrayList<ArrayList<String>>) highScores);
-            // Collections.reverse(highScores);
 
         }
         catch (FileNotFoundException error) {
@@ -103,6 +100,7 @@ public class DataManager {
     }
 
     public static List sortHighScore(ArrayList<ArrayList<String>> inputList) {
+
         for (int i = 0; i < inputList.size()-1; i++) {
             for (int j = 0; j < inputList.size()-1; j++) {
                 if (Integer.parseInt(inputList.get(j).get(1)) < Integer.parseInt(inputList.get(j + 1).get(1))) {
@@ -110,9 +108,7 @@ public class DataManager {
                     inputList.set(j, inputList.get(j+1));
                     inputList.set(j+1, temp);
                 }
-
             }
-
         }
 
         return inputList;

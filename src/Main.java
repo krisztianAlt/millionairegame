@@ -6,8 +6,10 @@ import java.util.ArrayList;
 public class Main {
 
     public static String[] halveAnswers(String[] randomizedAnswers, String rightAnswer) {
+
         int randomIndex = ThreadLocalRandom.current().nextInt(1, 4);
         int counter = 1;
+
         for (int i = 0; i < 4; i++) {
             if (randomizedAnswers[i] == rightAnswer) {
                 continue;
@@ -25,6 +27,7 @@ public class Main {
 
 
     public static void processGame() throws IOException {
+
         Game game = new Game();
 
         String userName = retrieveUserName();
@@ -38,8 +41,10 @@ public class Main {
         String[] randomizedAnswers = new String[4];
         boolean nextQuestionIsNotNeeded = true;
 
-        boolean userInGame = true; // if game ends, we should change userInGame to false
+        boolean userInGame = true;
+
         while (userInGame){
+
             if (nextQuestionIsNotNeeded){
 
                 level = game.getCurrentLevel();
@@ -49,8 +54,6 @@ public class Main {
 
                 questionWithAnswers = DataManager.readFromFile(game.getCurrentLevel(), randomQuestionNumber);
 
-
-                // NEW STUFF
                 for (int i = 0; i < 4; i++) {
                     randomizedAnswers[i] = questionWithAnswers[i + 1];
                 }
@@ -64,6 +67,7 @@ public class Main {
             String answer = "no_answer";
 
             boolean answerIsNotValid = true;
+
             while (answerIsNotValid){
 
                 Screen.clear();
@@ -74,6 +78,7 @@ public class Main {
                     Screen.displayMessages("Wrong input. Enter 1-4 to select answer, " +
                             "'H' to remove 2 wrong answers, 'P' to initiate a poll, 'E' to ask an expert.");
                 }
+
                 answer = Screen.getUserChoose(game);
 
                 if (answer != "wrong input" && answer != "no_answer") {
@@ -95,7 +100,6 @@ public class Main {
                 case "E":
                     game.setHasHelpers("expert", false);
 
-                    // __TODO__: add confirm message to start! Get Input from keyboard;
                     try {
                         Screen.timer(10);
                     }
@@ -107,7 +111,6 @@ public class Main {
                     break;
                 case "T":
                     try {
-                        // DataManager.saveResult(game.getUserName(), game.getPrize(level));
                         DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentLevel()));
                         Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentLevel()), game.getCurrentLevel());
                     } catch (IOException e) {
@@ -122,6 +125,7 @@ public class Main {
 
                         level++;
                         game.setCurrentLevel(level);
+
                         if (level == 11){
 
                             System.out.println("You have answered all questions correctly and won 5000 credits!");
@@ -129,7 +133,6 @@ public class Main {
                             userInGame = false;
 
                             try {
-                                // DataManager.saveResult(game.getUserName(), game.getPrize(10));
                                 DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentLevel()));
                                 Screen.endGame(game.getUserName(), game.getPrize(game.getCurrentLevel()), game.getCurrentLevel());
                             } catch (IOException e) {
@@ -161,15 +164,6 @@ public class Main {
 
                     } else {
 
-                        /*int point = 0;
-                        if (level < 3){
-                            point = 0;
-                        } else if (level < 7){
-                            point = 25;
-                        } else if (level < 10){
-                            point = 500;
-                        }*/
-
                         Screen.clear();
                         Screen.displayHeader();
                         Screen.displayProgressBar(game);
@@ -183,7 +177,6 @@ public class Main {
                             Screen.displayMessages("High score could not be saved.");
                         }
 
-
                         userInGame = false;
                     }
 
@@ -196,7 +189,7 @@ public class Main {
     public static String retrieveUserName() {
 
         Boolean status = true;
-        String userName = null;
+        String userName;
 
         do {
             userName = Screen.getUserName();
@@ -216,10 +209,10 @@ public class Main {
         int menuLength = Screen.printMenu();
 
         ArrayList<Integer> validOptions = new ArrayList<Integer>();
+
         for (int i = 1; i <= menuLength; i++) {
             validOptions.add(i);
         }
-
 
         while (!exitGame) {
             Screen.clear();
@@ -235,15 +228,13 @@ public class Main {
             int option = Screen.selectMenu(validOptions);
 
             Screen.clear();
+
             if (option == 1) {
                 processGame();
             } else if (option == 2) {
-                List<ArrayList<String>> highScores = new ArrayList<>();
-                highScores = DataManager.getHighScores();
+                List<ArrayList<String>> highScores = DataManager.getHighScores();
                 Screen.printHighScores(highScores);
-
             } else if (option == 3) {
-                // System.out.println("Credits");
                 Screen.credits();
             } else if (option == 4) {
                 System.out.println("Exiting Game");

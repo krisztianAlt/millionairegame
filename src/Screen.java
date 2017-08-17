@@ -1,7 +1,3 @@
-
-import com.sun.deploy.util.StringUtils;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -12,18 +8,20 @@ public class Screen {
     }
 
     public static int printMenu() {
+
         String[] menu = {"New Game", "High Scores", "Credits", "Exit"};
         for (int i = 0; i < menu.length; i++) {
             System.out.println(i+1 + " - " + menu[i]);
         }
+
         return menu.length;
     }
 
     public static int selectMenu(ArrayList<Integer> validOptions) {
+
         Scanner select = new Scanner(System.in);
         System.out.println("\nPlease select an option: ");
         int option = 0;
-
 
         if (select.hasNextInt()) {
             option = select.nextInt();
@@ -40,28 +38,38 @@ public class Screen {
 
         String userName = game.getUserName();
         int currentLevel = game.getCurrentLevel();
+
         String plusSigns = "";
+
         for (int index = 1; index < currentLevel; index++) {
             plusSigns = plusSigns+"(+)";
         }
+
         String remainedLevels = "";
+
         for (int index=currentLevel; index<11;index++){
             remainedLevels = remainedLevels + "(" + index + ")";
         }
+
         System.out.print("=====================================");
         System.out.println("\n" + userName + ": " + plusSigns + remainedLevels);
         System.out.println("=====================================\n");
     }
 
     public static void displayProgressBar(String userName, int currentLevel) {
+
         String plusSigns = "";
+
         for (int index = 1; index < currentLevel; index++) {
             plusSigns = plusSigns+"(+)";
         }
+
         String remainedLevels = "";
+
         for (int index=currentLevel; index<11;index++){
             remainedLevels = remainedLevels + "(" + index + ")";
         }
+
         System.out.print("=====================================");
         System.out.println("\n" + userName + ": " + plusSigns + remainedLevels);
         System.out.println("=====================================\n");
@@ -74,7 +82,7 @@ public class Screen {
 
         // print question and answers:
         System.out.println("Question: " + questionWithAnswers[0] + "\n");
-        // NEW STUFF
+
         for(int i = 0; i < 4; i++) {
             System.out.println((i + 1) + ". " + randomizedAnswers[i]);
         }
@@ -82,6 +90,7 @@ public class Screen {
         // print helpers:
         HashMap<String, Boolean> availableHelpers = game.getHasHelpers();
         String helpers = "";
+
         if (availableHelpers.get("half") == true ||
                 availableHelpers.get("poll") == true ||
                 availableHelpers.get("expert") == true) {
@@ -93,12 +102,15 @@ public class Screen {
         if (availableHelpers.get("half") == true){
             helpers = helpers + "50:50 (H)  ";
         }
+
         if (availableHelpers.get("poll") == true){
             helpers = helpers + "POLL (P)  ";
         }
+
         if (availableHelpers.get("expert") == true){
             helpers = helpers + "Expert (E)";
         }
+
         System.out.println("\n\n"+helpers);
         System.out.println("\n========================");
         System.out.println("Take the money & run (T)");
@@ -107,11 +119,13 @@ public class Screen {
     }
 
     public static String getUserChoose(Game game) {
+
         Scanner select = new Scanner(System.in);
         System.out.println("Please select an answer or use a life-line: ");
 
         // construct the list of actual number buttons:
         List<Integer> numberButtons = new ArrayList<>();
+
         for (int numOfButton = 1; numOfButton < 5; numOfButton++){
             numberButtons.add(numOfButton-1, numOfButton);
         }
@@ -120,15 +134,19 @@ public class Screen {
         HashMap<String, Boolean> availableHelpers = new HashMap<>();
         availableHelpers = game.getHasHelpers();
         List<String> helperButtons = new ArrayList<>();
+
         if (availableHelpers.get("half") == true){
             helperButtons.add("H");
         }
+
         if (availableHelpers.get("poll") == true){
             helperButtons.add("P");
         }
+
         if (availableHelpers.get("expert") == true){
             helperButtons.add("E");
         }
+
         helperButtons.add("T");
 
         // get the user's choice:
@@ -138,7 +156,7 @@ public class Screen {
             if (numberButtons.contains(option)) {
                 return option.toString();
             }
-        } else if(select.hasNextLine()){
+        } else if (select.hasNextLine()){
             String option = select.nextLine().toUpperCase();
 
             if (helperButtons.contains(option)){
@@ -163,12 +181,15 @@ public class Screen {
     }
 
     public static void displayMessages(String message){
+
         System.out.println(message + "\n");
     }
 
     public static void confirmContinue() {
+
         Scanner justOnePush = new Scanner(System.in);
         System.out.println("Please, press ENTER to continue.");
+
         if (justOnePush.hasNextLine()) {
             clear();
         }
@@ -188,6 +209,7 @@ public class Screen {
         System.out.println("\n\n================");
         System.out.println("WRONG ANSWER!");
         System.out.println("================");
+
         switch (checkPoint) {
             case 0:
                 System.out.println("\nSorry, you have to go home with EMPTY hands!\n");
@@ -202,6 +224,7 @@ public class Screen {
     }
 
     public static void credits() {
+
         clear();
         displayHeader();
 
@@ -214,8 +237,10 @@ public class Screen {
     }
 
     public static void timer(int seconds) throws InterruptedException {
+
         long delay = seconds * 1000;
         String printedSeconds = "";
+
         do {
             printedSeconds += seconds + " ";
             clear();
@@ -225,20 +250,21 @@ public class Screen {
             delay = delay - 1000;
         }
         while (delay != 0);
+
         System.out.println("Time's Up!");
     }
 
 
     public static void displayHeader() {
+
         System.out.println("\nWHO WANTS TO BE A MILLIONAIRE?\n");
     }
 
     public static void printHighScores(List<ArrayList<String>> highScores) {
+
         displayHeader();
         System.out.println("\nHigh scores:\n");
-        // System.out.println(highScores);
 
-        int[] output = new int[highScores.size()];
         int upperLimit = 10;
         if (highScores.size() == 0) {
             System.out.println("The list is empty.");
@@ -254,6 +280,7 @@ public class Screen {
 
         Scanner justOnePush = new Scanner(System.in);
         System.out.println("\n\n\nPlease, press any button to continue.");
+
         if (justOnePush.hasNextLine()) {
             clear();
         }
@@ -261,6 +288,7 @@ public class Screen {
     }
 
     public static void endGame(String name, int point, int level) {
+
         clear();
         displayHeader();
         displayProgressBar(name, level);
