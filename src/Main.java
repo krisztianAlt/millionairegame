@@ -96,6 +96,7 @@ public class Main {
                     game.setHasHelpers("half", false);
                     System.out.println("RANDIMOZED WITH TWO HIDDEN ANSWER: " + Arrays.toString(randomizedAnswers));
                     Screen.displayQuestion(game, questionWithAnswers, randomizedAnswers);
+                    Screen.playSound("joker_half");
                     break;
                 case "P":
                     game.setHasHelpers("poll", false);
@@ -133,6 +134,9 @@ public class Main {
                         if (level == 11){
 
                             System.out.println("You have answered all questions correctly and won 5000 credits!");
+
+                            Screen.playSound("start");
+
                             Screen.confirmContinue();
                             userInGame = false;
 
@@ -149,6 +153,8 @@ public class Main {
                             Screen.displayHeader();
                             Screen.displayProgressBar(game);
                             Screen.displayRightAnswer(questionWithAnswers[0], questionWithAnswers[1]);
+
+                            Screen.playSound("good");
 
                             // set checkpoint:
                             if (level == 4){
@@ -173,6 +179,8 @@ public class Main {
                         Screen.displayProgressBar(game);
                         Screen.displayWrongAnswer(questionWithAnswers[0], questionWithAnswers[1],
                                 randomizedAnswers[Integer.parseInt(answer)-1], game.getCurrentCheckpoint());
+
+                        Screen.playSound("wrong");
 
                         try {
                             DataManager.saveResult(game.getUserName(), game.getPrize(game.getCurrentCheckpoint()));
